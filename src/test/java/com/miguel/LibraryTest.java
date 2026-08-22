@@ -345,5 +345,134 @@ public class LibraryTest {
                 usuario
         );
     }
+
+    @Test
+    void noDeberiaAgregarLibroConIdDuplicado() throws Exception {
+
+        Library biblioteca = new Library();
+
+        Book libro = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        Book libro2 = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        biblioteca.agregarLibro(libro);
+
+        LibroYaExisteException exception = assertThrows(
+                LibroYaExisteException.class,
+                () -> biblioteca.agregarLibro(libro2)
+        );
+
+        assertEquals(
+                "Ya existe un libro con el ID: 1",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void deberiaBuscarLibroPorTituloSinImportarMayusculas() throws Exception {
+
+        Library biblioteca = new Library();
+
+        Book libro = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        biblioteca.agregarLibro(libro);
+
+        assertEquals(
+                libro,
+                biblioteca.buscarLibroPorTitulo("EL PRINCIPITO")
+        );
+    }
+
+    @Test
+    void deberiaLanzarExcepcionSiElLibroNoExistePorTitulo() throws Exception {
+
+        Library biblioteca = new Library();
+
+        LibroNoEncontradoException exception = assertThrows(
+                LibroNoEncontradoException.class,
+                () -> biblioteca.buscarLibroPorTitulo("Libro inexistente")
+        );
+
+        assertEquals(
+                "El libro Libro inexistente no existe",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void deberiaEliminarLibroCorrectamente() throws Exception {
+
+        Library biblioteca = new Library();
+
+        Book libro = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        biblioteca.agregarLibro(libro);
+
+        assertEquals(
+                libro,
+                biblioteca.buscarLibroPorId(1)
+        );
+
+        biblioteca.eliminarLibro(1);
+
+        assertThrows(
+                LibroNoEncontradoException.class,
+                () -> biblioteca.buscarLibroPorId(1)
+        );
+    }
+
+    @Test
+    void noDeberiaEliminarLibroPrestado() throws Exception {
+
+        Library biblioteca = new Library();
+
+        Book libro = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        biblioteca.agregarLibro(libro);
+
+        Student student = new Student(
+                "Miguel",
+                1
+        );
+
+        biblioteca.agregarUsuario(student);
+
+        biblioteca.prestarLibro("El principito", student);
+
+        assertThrows(
+                LibroPrestadoException.class,
+                () -> biblioteca.eliminarLibro(1)
+        );
+
+        assertEquals(
+                libro,
+                biblioteca.buscarLibroPorId(1)
+        );
+    }
 }
 
