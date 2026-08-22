@@ -2,9 +2,17 @@ package com.miguel;
 
 import com.miguel.Excepciones.TipoUsuarioInvalidoException;
 
-public class UserFactory {
+public final class UserFactory {
 
-    public static User crearUsuario(String nombre, int id, int tipo, Library biblioteca) throws TipoUsuarioInvalidoException {
+    private UserFactory() {
+    }
+
+    public static User crearUsuario(
+            String nombre,
+            int id,
+            int tipo,
+            Library biblioteca
+    ) throws TipoUsuarioInvalidoException {
 
         return switch (tipo) {
 

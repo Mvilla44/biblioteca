@@ -474,5 +474,57 @@ public class LibraryTest {
                 biblioteca.buscarLibroPorId(1)
         );
     }
+
+    @Test
+    void noDeberiaCrearPrestamosSinLibro() throws Exception {
+
+        Student student = new Student(
+                "Miguel",
+                1
+        );
+
+        assertThrows(
+                NullPointerException.class,
+                () -> new Prestamo(null, student)
+        );
+    }
+
+    @Test
+    void noDeberiaCrearPrestamosSinUsuario() throws Exception {
+
+        Book libro = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        assertThrows(
+                NullPointerException.class,
+                () -> new Prestamo(libro, null)
+        );
+    }
+
+    @Test
+    void noDeberiaDevolverPrestamoDosVeces() throws Exception {
+
+        Book libro = new Book(
+                1,
+                "El principito",
+                "Antoine de Saint-Exupery",
+                1943
+        );
+
+        Student student = new Student("Miguel", 1);
+
+        Prestamo prestamo = new Prestamo(libro, student);
+
+        prestamo.devolver();
+
+        assertThrows(
+                IllegalStateException.class,
+                prestamo::devolver
+        );
+    }
 }
 
