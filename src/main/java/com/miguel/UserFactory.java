@@ -1,4 +1,6 @@
-import Excepciones.*;
+package com.miguel;
+
+import com.miguel.Excepciones.TipoUsuarioInvalidoException;
 
 public class UserFactory {
 

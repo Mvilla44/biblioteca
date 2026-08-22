@@ -1,4 +1,7 @@
-import Excepciones.*;
+package com.miguel;
+
+import com.miguel.Excepciones.LibroNoEncontradoException;
+import com.miguel.Excepciones.LibroPrestadoException;
 
 public class Profesor extends User implements GestionPrestamos {
 

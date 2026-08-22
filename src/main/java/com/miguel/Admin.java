@@ -1,4 +1,6 @@
-import Excepciones.*;
+package com.miguel;
+
+import com.miguel.Excepciones.*;
 
 public class Admin extends User implements OperacionesAdministrativas {
 

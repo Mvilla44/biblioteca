@@ -1,4 +1,6 @@
-import Excepciones.*;
+package com.miguel;
+
+import com.miguel.Excepciones.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

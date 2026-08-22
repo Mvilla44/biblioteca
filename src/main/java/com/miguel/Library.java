@@ -1,6 +1,9 @@
+package com.miguel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import Excepciones.*;
+
+import com.miguel.Excepciones.*;
 
 public class Library implements OperacionesAdministrativas {
 

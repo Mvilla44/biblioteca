@@ -1,5 +1,8 @@
+package com.miguel;
+
 import java.util.Scanner;
-import Excepciones.*;
+
+import com.miguel.Excepciones.*;
 
 public class Main {
 

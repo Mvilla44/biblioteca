@@ -1,4 +1,4 @@
-package Excepciones;
+package com.miguel.Excepciones;
 
 public class LibroNoEncontradoException extends Exception {
 

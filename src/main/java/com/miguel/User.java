@@ -1,3 +1,5 @@
+package com.miguel;
+
 public abstract class User {
 
     private String nombre;

@@ -1,3 +1,5 @@
+package com.miguel;
+
 import java.time.LocalDate;
 
 public class Prestamo {

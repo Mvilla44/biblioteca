@@ -1,3 +1,5 @@
+package com.miguel;
+
 public class Book {
 
     private final int id;

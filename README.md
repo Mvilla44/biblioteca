@@ -29,17 +29,17 @@ biblioteca/
 ├── src/
 │   ├── main/
 │   │   └── java/
-│   │       ├── Admin.java
-│   │       ├── Book.java
-│   │       ├── GestionPrestamos.java
-│   │       ├── Library.java
-│   │       ├── Main.java
-│   │       ├── OperacionesAdministrativas.java
-│   │       ├── Prestamo.java
-│   │       ├── Profesor.java
-│   │       ├── Student.java
-│   │       ├── User.java
-│   │       ├── UserFactory.java
+│   │       ├── com.miguel.Admin.java
+│   │       ├── com.miguel.Book.java
+│   │       ├── com.miguel.GestionPrestamos.java
+│   │       ├── com.miguel.Library.java
+│   │       ├── com.miguel.Main.java
+│   │       ├── com.miguel.OperacionesAdministrativas.java
+│   │       ├── com.miguel.Prestamo.java
+│   │       ├── com.miguel.Profesor.java
+│   │       ├── com.miguel.Student.java
+│   │       ├── com.miguel.User.java
+│   │       ├── com.miguel.UserFactory.java
 │   │       └── Excepciones/
 │   │           ├── LibroNoEncontradoException.java
 │   │           ├── LibroPrestadoException.java
@@ -49,7 +49,7 @@ biblioteca/
 │   │           └── UsuarioYaExisteException.java
 │   └── test/
 │       └── java/
-│           └── LibraryTest.java
+│           └── com.miguel.LibraryTest.java
 ├── .gitignore
 └── pom.xml
 ```
@@ -96,7 +96,7 @@ Esto permite que la lógica de negocio sea más clara y que los errores se gesti
 Las pruebas automatizadas están ubicadas en:
 
 ```text
-src/test/java/LibraryTest.java
+src/test/java/com.miguel.LibraryTest.java
 ```
 
 Para ejecutar las pruebas con Maven:
@@ -141,7 +141,7 @@ mvn clean test
 La aplicación se puede ejecutar desde IntelliJ IDEA ejecutando la clase:
 
 ```text
-Main.java
+com.miguel.Main.java
 ```
 
 ## Objetivo del proyecto
