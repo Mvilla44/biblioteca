@@ -2,16 +2,18 @@ package com.miguel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.miguel.Excepciones.*;
 
 public class Library implements OperacionesAdministrativas {
 
-    private final HashMap<Integer, Book> libros;
+    private final Map<Integer, Book> libros;
 
-    private final HashMap<Integer, User> usuarios;
+    private final Map<Integer, User> usuarios;
 
-    private final ArrayList<Prestamo> prestamos;
+    private final List<Prestamo> prestamos;
 
     public Library() {
 
@@ -26,7 +28,8 @@ public class Library implements OperacionesAdministrativas {
 
         for (Prestamo prestamo : prestamos) {
 
-            if (prestamo.getLibro() == libro && prestamo.estaActivo()) {
+            if (prestamo.getLibro().getId() == libro.getId()
+                    && prestamo.estaActivo()) {
                 return true;
             }
         }
@@ -78,7 +81,6 @@ public class Library implements OperacionesAdministrativas {
         libros.remove(id);
     }
 
-
     public void mostrarLibros() {
 
         for (Book libro : libros.values()) {
@@ -86,7 +88,8 @@ public class Library implements OperacionesAdministrativas {
         }
     }
 
-    public void prestarLibro(String titulo, User usuario) throws LibroNoEncontradoException, LibroPrestadoException {
+    public void prestarLibro(String titulo, User usuario)
+            throws LibroNoEncontradoException, LibroPrestadoException {
 
         Book libro = buscarLibroPorTitulo(titulo);
 
@@ -109,7 +112,9 @@ public class Library implements OperacionesAdministrativas {
 
         for (Prestamo prestamo : prestamos) {
 
-            if (prestamo.getLibro() == libro && prestamo.getUsuario().equals(usuario) && prestamo.estaActivo()) {
+            if (prestamo.getLibro().getId() == libro.getId()
+                    && prestamo.getUsuario().equals(usuario)
+                    && prestamo.estaActivo()) {
 
                 prestamo.devolver();
                 return;
@@ -121,13 +126,13 @@ public class Library implements OperacionesAdministrativas {
 
     public void agregarUsuario(User usuario) throws UsuarioYaExisteException {
 
-    if (usuario == null) {
-        throw new IllegalArgumentException("El usuario no puede estar vacío");
-    }
+        if (usuario == null) {
+            throw new IllegalArgumentException("El usuario no puede estar vacío");
+        }
 
-    if (usuarios.containsKey(usuario.getId())) {
-        throw new UsuarioYaExisteException(usuario.getId());
-    }
+        if (usuarios.containsKey(usuario.getId())) {
+            throw new UsuarioYaExisteException(usuario.getId());
+        }
 
         usuarios.put(usuario.getId(), usuario);
     }
@@ -144,7 +149,9 @@ public class Library implements OperacionesAdministrativas {
 
             if (prestamo.getUsuario().equals(usuario) && prestamo.estaActivo()) {
 
-                throw new IllegalStateException("El usuario tiene libros prestados y no puede ser eliminado");
+                throw new IllegalStateException(
+                        "El usuario tiene libros prestados y no puede ser eliminado"
+                );
             }
         }
 

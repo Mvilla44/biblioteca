@@ -3,7 +3,7 @@ package com.miguel;
 public abstract class User {
 
     private String nombre;
-    private int id;
+    private final int id;
 
     public User(String nombre, int id) {
         this.nombre = nombre;
@@ -23,10 +23,6 @@ public abstract class User {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setNombre(String nombre) {
