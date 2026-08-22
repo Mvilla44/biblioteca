@@ -1,26 +1,55 @@
 # Sistema de Gestión de Biblioteca
 
-Sistema de gestión de biblioteca desarrollado en Java como proyecto de práctica y portafolio. Permite administrar libros y usuarios, gestionar préstamos y devoluciones, aplicar reglas de negocio mediante excepciones y ejecutar pruebas automatizadas con JUnit.
+Aplicación de consola desarrollada en **Java** para administrar una biblioteca mediante libros, usuarios y préstamos. El proyecto fue construido como práctica de programación orientada a objetos y como proyecto de portafolio, incorporando **Maven, JUnit 5 y Git/GitHub**.
 
-## Funcionalidades
+## Características
 
-- Registro, búsqueda y eliminación de libros.
-- Registro, búsqueda y eliminación de usuarios.
-- Gestión de préstamos y devoluciones.
-- Validación de libros ya registrados.
-- Validación de libros no encontrados.
-- Validación de libros actualmente prestados.
-- Manejo de excepciones personalizadas.
-- Diferenciación de tipos de usuario: estudiante, profesor y administrador.
+- Gestión de libros: agregar, buscar, mostrar y eliminar.
+- Gestión de usuarios: agregar, buscar, mostrar y eliminar.
+- Préstamo y devolución de libros.
+- Control de libros disponibles y prestados.
+- Restricciones de negocio, como impedir préstamos duplicados o eliminar libros prestados.
+- Tres tipos de usuario: `Student`, `Profesor` y `Admin`.
+- Creación de usuarios mediante `UserFactory`.
+- Excepciones personalizadas para errores del dominio.
 - Pruebas automatizadas con JUnit 5.
 
-## Tecnologías utilizadas
+## Tecnologías
 
-- **Java 25**
-- **Maven**
-- **JUnit 5**
-- **Git**
-- **GitHub**
+| Tecnología | Uso |
+|---|---|
+| Java 25 | Lenguaje y desarrollo de la aplicación |
+| Maven | Gestión del proyecto, dependencias y ejecución de pruebas |
+| JUnit 5 | Pruebas automatizadas |
+| Git | Control de versiones |
+| GitHub | Repositorio y publicación del proyecto |
+
+## Arquitectura y diseño
+
+El proyecto aplica principios de programación orientada a objetos para separar responsabilidades y representar el dominio de la biblioteca.
+
+### Principales clases
+
+- `Library`: administra libros, usuarios y préstamos y concentra las reglas principales del negocio.
+- `Book`: representa un libro y sus datos principales.
+- `User`: clase abstracta base para los usuarios.
+- `Student`, `Profesor` y `Admin`: especializaciones de `User`.
+- `Prestamo`: representa un préstamo y controla su estado activo o devuelto.
+- `UserFactory`: centraliza la creación de los diferentes tipos de usuario.
+- `GestionPrestamos`: define las operaciones relacionadas con préstamos y devoluciones.
+- `OperacionesAdministrativas`: define operaciones administrativas de la biblioteca.
+
+### Conceptos aplicados
+
+- **Encapsulamiento:** atributos privados y acceso mediante métodos.
+- **Herencia:** `Student`, `Profesor` y `Admin` heredan de `User`.
+- **Abstracción:** `User` define el comportamiento común de los usuarios.
+- **Polimorfismo:** cada tipo de usuario puede implementar su comportamiento específico.
+- **Interfaces:** separación de responsabilidades mediante `GestionPrestamos` y `OperacionesAdministrativas`.
+- **Colecciones:** uso de `Map` y `List` para gestionar entidades y préstamos.
+- **Excepciones personalizadas:** errores específicos del dominio tratados de forma explícita.
+- **Factory Pattern:** `UserFactory` encapsula la creación de usuarios.
+- **Inmutabilidad:** identificadores y referencias que no deben cambiar se mantienen como `final`.
 
 ## Estructura del proyecto
 
@@ -29,124 +58,133 @@ biblioteca/
 ├── src/
 │   ├── main/
 │   │   └── java/
-│   │       ├── com.miguel.Admin.java
-│   │       ├── com.miguel.Book.java
-│   │       ├── com.miguel.GestionPrestamos.java
-│   │       ├── com.miguel.Library.java
-│   │       ├── com.miguel.Main.java
-│   │       ├── com.miguel.OperacionesAdministrativas.java
-│   │       ├── com.miguel.Prestamo.java
-│   │       ├── com.miguel.Profesor.java
-│   │       ├── com.miguel.Student.java
-│   │       ├── com.miguel.User.java
-│   │       ├── com.miguel.UserFactory.java
-│   │       └── Excepciones/
-│   │           ├── LibroNoEncontradoException.java
-│   │           ├── LibroPrestadoException.java
-│   │           ├── LibroYaExisteException.java
-│   │           ├── TipoUsuarioInvalidoException.java
-│   │           ├── UsuarioNoEncontradoException.java
-│   │           └── UsuarioYaExisteException.java
+│   │       └── com/
+│   │           └── miguel/
+│   │               ├── Admin.java
+│   │               ├── Book.java
+│   │               ├── GestionPrestamos.java
+│   │               ├── Library.java
+│   │               ├── Main.java
+│   │               ├── OperacionesAdministrativas.java
+│   │               ├── Prestamo.java
+│   │               ├── Profesor.java
+│   │               ├── Student.java
+│   │               ├── User.java
+│   │               ├── UserFactory.java
+│   │               └── Excepciones/
+│   │                   ├── LibroNoEncontradoException.java
+│   │                   ├── LibroPrestadoException.java
+│   │                   ├── LibroYaExisteException.java
+│   │                   ├── TipoUsuarioInvalidoException.java
+│   │                   ├── UsuarioNoEncontradoException.java
+│   │                   └── UsuarioYaExisteException.java
 │   └── test/
 │       └── java/
-│           └── com.miguel.LibraryTest.java
+│           └── com/
+│               └── miguel/
+│                   └── LibraryTest.java
 ├── .gitignore
-└── pom.xml
+├── pom.xml
+└── README.md
 ```
 
-## Conceptos de programación aplicados
+## Pruebas automatizadas
 
-El proyecto utiliza varios conceptos importantes de programación orientada a objetos y desarrollo con Java:
+El proyecto cuenta actualmente con **22 pruebas automatizadas** para validar escenarios de libros, usuarios, préstamos, devoluciones, excepciones y creación de usuarios.
 
-- **Herencia:** `Student`, `Profesor` y `Admin` heredan de `User`.
-- **Abstracción:** `User` define el comportamiento común de los usuarios.
-- **Interfaces:** `GestionPrestamos` y `OperacionesAdministrativas` separan responsabilidades.
-- **Encapsulamiento:** los atributos de las clases se mantienen privados y se accede a ellos mediante métodos.
-- **Polimorfismo:** los diferentes tipos de usuario implementan comportamientos específicos.
-- **Colecciones:** uso de `HashMap` y `ArrayList` para gestionar libros, usuarios y préstamos.
-- **Excepciones personalizadas:** se controlan errores específicos del dominio de la aplicación.
-- **Inmutabilidad:** varios atributos de las entidades principales se definen como `final`.
-- **Pruebas automatizadas:** se utiliza JUnit 5 para verificar el comportamiento de la biblioteca.
-
-## Gestión de datos
-
-La clase `Library` centraliza la gestión del sistema utilizando:
-
-- `HashMap<Integer, Book>` para almacenar libros por ID.
-- `HashMap<Integer, User>` para almacenar usuarios por ID.
-- `ArrayList<Prestamo>` para registrar los préstamos.
-
-Esto permite realizar búsquedas y validaciones de forma organizada y mantener separadas las responsabilidades del sistema.
-
-## Manejo de excepciones
-
-El proyecto utiliza excepciones específicas para controlar situaciones como:
-
-- Intentar registrar un libro que ya existe.
-- Buscar un libro que no existe.
-- Intentar eliminar un libro que actualmente está prestado.
-- Registrar un usuario con un ID existente.
-- Buscar un usuario que no existe.
-- Utilizar un tipo de usuario no válido.
-
-Esto permite que la lógica de negocio sea más clara y que los errores se gestionen de forma explícita.
-
-## Pruebas
-
-Las pruebas automatizadas están ubicadas en:
+Las pruebas se encuentran en:
 
 ```text
-src/test/java/com.miguel.LibraryTest.java
+src/test/java/com/miguel/LibraryTest.java
 ```
 
-Para ejecutar las pruebas con Maven:
+Para ejecutarlas:
 
 ```bash
 mvn clean test
 ```
 
-El proyecto está configurado para Java 25 y las pruebas se ejecutan mediante JUnit 5.
+El resultado esperado es:
 
-## Ejecución del proyecto
+```text
+BUILD SUCCESS
+```
 
-### Requisitos
+## Ejemplos de reglas de negocio probadas
 
-Antes de ejecutar el proyecto debes tener instalado:
+Entre los escenarios cubiertos por las pruebas se encuentran:
 
-- JDK 25 o compatible.
-- Maven 3.9.x o compatible.
+- No permitir registrar dos libros con el mismo ID.
+- Lanzar una excepción cuando se busca un libro inexistente.
+- No permitir prestar un libro que ya está prestado.
+- Permitir devolver correctamente un libro prestado.
+- Impedir que un usuario devuelva un libro que pertenece a otro préstamo.
+- No permitir registrar usuarios con IDs duplicados.
+- No permitir eliminar usuarios que mantienen préstamos activos.
+- Validar tipos de usuario no soportados en `UserFactory`.
+- Impedir crear préstamos sin libro o usuario válidos.
+- Impedir devolver un préstamo que ya fue cerrado.
 
-Puedes comprobar las versiones con:
+## Gestión de datos
+
+`Library` mantiene la información en memoria mediante colecciones de Java:
+
+- `Map<Integer, Book>` para los libros identificados por ID.
+- `Map<Integer, User>` para los usuarios identificados por ID.
+- `List<Prestamo>` para los préstamos registrados.
+
+Se utiliza el tipo de colección (`Map`/`List`) en las declaraciones para reducir el acoplamiento con una implementación concreta y mantener el diseño más flexible.
+
+## Excepciones personalizadas
+
+El proyecto cuenta con excepciones específicas para representar errores del dominio, entre ellas:
+
+- `LibroNoEncontradoException`
+- `LibroPrestadoException`
+- `LibroYaExisteException`
+- `TipoUsuarioInvalidoException`
+- `UsuarioNoEncontradoException`
+- `UsuarioYaExisteException`
+
+Esto permite separar los errores propios de la aplicación de errores genéricos de ejecución.
+
+## Requisitos
+
+- **JDK 25**
+- **Maven 3.9.x** o compatible
+- Git, si se desea clonar el repositorio
+
+Comprobar versiones:
 
 ```bash
 java -version
 mvn -version
 ```
 
-### Clonar el repositorio
+## Instalación y ejecución
+
+Clonar el proyecto:
 
 ```bash
 git clone https://github.com/Mvilla44/biblioteca.git
 cd biblioteca
 ```
 
-### Compilar y ejecutar las pruebas
+Ejecutar las pruebas:
 
 ```bash
 mvn clean test
 ```
 
-### Ejecutar la aplicación
-
-La aplicación se puede ejecutar desde IntelliJ IDEA ejecutando la clase:
+Ejecutar la aplicación desde IntelliJ IDEA mediante:
 
 ```text
-com.miguel.Main.java
+com.miguel.Main
 ```
 
 ## Objetivo del proyecto
 
-Este proyecto fue desarrollado como una aplicación práctica para reforzar conocimientos de Java y demostrar el uso de programación orientada a objetos, colecciones, interfaces, excepciones, pruebas automatizadas, Maven y control de versiones con Git.
+Este proyecto busca demostrar el dominio práctico de conceptos fundamentales de Java y herramientas utilizadas en un flujo de desarrollo real: programación orientada a objetos, colecciones, interfaces, herencia, polimorfismo, excepciones personalizadas, pruebas automatizadas, Maven y control de versiones con Git.
 
 ## Autor
 
