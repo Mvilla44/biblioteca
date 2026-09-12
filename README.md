@@ -1,11 +1,4 @@
-<!--
-  Sugerencia: sube una imagen de portada (banner) a la carpeta del repo,
-  por ejemplo en /docs/banner.png (tamaño recomendado: 1200x630),
-  y reemplaza la línea de abajo con:
-  ![Banner](./docs/banner.png)
--->
-
-![Banner](./docs/banner.svg)
+![Banner](./docs/banner.png)
 
 # 📚 Sistema de Gestión de Biblioteca
 
