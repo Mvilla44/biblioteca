@@ -1,8 +1,41 @@
-# Sistema de Gestión de Biblioteca
+<!--
+  Sugerencia: sube una imagen de portada (banner) a la carpeta del repo,
+  por ejemplo en /docs/banner.png (tamaño recomendado: 1200x630),
+  y reemplaza la línea de abajo con:
+  ![Banner](./docs/banner.png)
+-->
+
+![Banner](./docs/banner.svg)
+
+# 📚 Sistema de Gestión de Biblioteca
+
+![Java](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-Build-C71A36?logo=apachemaven&logoColor=white)
+![JUnit5](https://img.shields.io/badge/Tests-JUnit%205-25A162?logo=junit5&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests%20passing-22%2F22-brightgreen)
+![Status](https://img.shields.io/badge/Status-Completed-blue)
 
 Aplicación de consola desarrollada en **Java** para administrar una biblioteca mediante libros, usuarios y préstamos. El proyecto fue construido como práctica de programación orientada a objetos y como proyecto de portafolio, incorporando **Maven, JUnit 5 y Git/GitHub**.
 
-## Características
+---
+
+## 📑 Tabla de contenido
+
+- [Características](#-características)
+- [Tecnologías](#-tecnologías)
+- [Arquitectura y diseño](#-arquitectura-y-diseño)
+- [Estructura del proyecto](#-estructura-del-proyecto)
+- [Pruebas automatizadas](#-pruebas-automatizadas)
+- [Gestión de datos](#-gestión-de-datos)
+- [Excepciones personalizadas](#-excepciones-personalizadas)
+- [Requisitos](#-requisitos)
+- [Instalación y ejecución](#-instalación-y-ejecución)
+- [Objetivo del proyecto](#-objetivo-del-proyecto)
+- [Autor](#-autor)
+
+---
+
+## ✨ Características
 
 - Gestión de libros: agregar, buscar, mostrar y eliminar.
 - Gestión de usuarios: agregar, buscar, mostrar y eliminar.
@@ -14,7 +47,7 @@ Aplicación de consola desarrollada en **Java** para administrar una biblioteca 
 - Excepciones personalizadas para errores del dominio.
 - Pruebas automatizadas con JUnit 5.
 
-## Tecnologías
+## 🛠 Tecnologías
 
 | Tecnología | Uso |
 |---|---|
@@ -24,7 +57,7 @@ Aplicación de consola desarrollada en **Java** para administrar una biblioteca 
 | Git | Control de versiones |
 | GitHub | Repositorio y publicación del proyecto |
 
-## Arquitectura y diseño
+## 🏗 Arquitectura y diseño
 
 El proyecto aplica principios de programación orientada a objetos para separar responsabilidades y representar el dominio de la biblioteca.
 
@@ -51,7 +84,7 @@ El proyecto aplica principios de programación orientada a objetos para separar 
 - **Factory Pattern:** `UserFactory` encapsula la creación de usuarios.
 - **Inmutabilidad:** identificadores y referencias que no deben cambiar se mantienen como `final`.
 
-## Estructura del proyecto
+## 📂 Estructura del proyecto
 
 ```text
 biblioteca/
@@ -88,7 +121,7 @@ biblioteca/
 └── README.md
 ```
 
-## Pruebas automatizadas
+## ✅ Pruebas automatizadas
 
 El proyecto cuenta actualmente con **22 pruebas automatizadas** para validar escenarios de libros, usuarios, préstamos, devoluciones, excepciones y creación de usuarios.
 
@@ -110,9 +143,7 @@ El resultado esperado es:
 BUILD SUCCESS
 ```
 
-## Ejemplos de reglas de negocio probadas
-
-Entre los escenarios cubiertos por las pruebas se encuentran:
+### Ejemplos de reglas de negocio probadas
 
 - No permitir registrar dos libros con el mismo ID.
 - Lanzar una excepción cuando se busca un libro inexistente.
@@ -125,7 +156,7 @@ Entre los escenarios cubiertos por las pruebas se encuentran:
 - Impedir crear préstamos sin libro o usuario válidos.
 - Impedir devolver un préstamo que ya fue cerrado.
 
-## Gestión de datos
+## 🗄 Gestión de datos
 
 `Library` mantiene la información en memoria mediante colecciones de Java:
 
@@ -135,7 +166,7 @@ Entre los escenarios cubiertos por las pruebas se encuentran:
 
 Se utiliza el tipo de colección (`Map`/`List`) en las declaraciones para reducir el acoplamiento con una implementación concreta y mantener el diseño más flexible.
 
-## Excepciones personalizadas
+## ⚠️ Excepciones personalizadas
 
 El proyecto cuenta con excepciones específicas para representar errores del dominio, entre ellas:
 
@@ -148,7 +179,7 @@ El proyecto cuenta con excepciones específicas para representar errores del dom
 
 Esto permite separar los errores propios de la aplicación de errores genéricos de ejecución.
 
-## Requisitos
+## 📋 Requisitos
 
 - **JDK 25**
 - **Maven 3.9.x** o compatible
@@ -161,7 +192,7 @@ java -version
 mvn -version
 ```
 
-## Instalación y ejecución
+## 🚀 Instalación y ejecución
 
 Clonar el proyecto:
 
@@ -182,11 +213,11 @@ Ejecutar la aplicación desde IntelliJ IDEA mediante:
 com.miguel.Main
 ```
 
-## Objetivo del proyecto
+## 🎯 Objetivo del proyecto
 
 Este proyecto busca demostrar el dominio práctico de conceptos fundamentales de Java y herramientas utilizadas en un flujo de desarrollo real: programación orientada a objetos, colecciones, interfaces, herencia, polimorfismo, excepciones personalizadas, pruebas automatizadas, Maven y control de versiones con Git.
 
-## Autor
+## 👤 Autor
 
 **Miguel Villa**
 
