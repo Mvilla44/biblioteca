@@ -1,8 +1,8 @@
 package com.miguel;
 
 import java.util.Scanner;
-
 import com.miguel.Excepciones.*;
+import com.miguel.ia.AsistenteBiblioteca;
 
 public class Main {
 
@@ -11,6 +11,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Library biblioteca = new Library();
+
+        AsistenteBiblioteca asistente = new AsistenteBiblioteca(biblioteca);
 
         Book libro0 = new Book(1,"Alicia en el país de las maravillas", "Lewis Carroll", 1871);
         Book libro1 = new Book(2, "Don quijote de la mancha", "Miguel de Cervantes", 1605);
@@ -68,7 +70,8 @@ public class Main {
                 System.out.println("8. Agregar usuario");
                 System.out.println("9. Mostrar los libros prestados");
                 System.out.println("10. Eliminar usuarios");
-                System.out.println("11. Salir");
+                System.out.println("11. Preguntar al asistente");
+                System.out.println("12. Salir");
 
                 System.out.println("Selecciona una opción: ");
 
@@ -266,6 +269,22 @@ public class Main {
                     break;
 
                 case 11:
+
+                    scanner.nextLine();
+
+                    System.out.println("Escribe tu pregunta para el asistente: ");
+                    String preguntaAsistente = scanner.nextLine();
+
+                    try {
+                        String respuesta = asistente.responder(preguntaAsistente);
+                        System.out.println("\nRespuesta del asistente:\n" + respuesta + "\n\n");
+                    } catch (Exception e) {
+                        System.out.println("Ocurrió un error al consultar el asistente" + e.getMessage());
+                    }
+
+                    break;
+
+                case 12:
 
                     System.out.println("Saliendo del sistema...");
                     continuar = false;

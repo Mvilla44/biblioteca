@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collection;
 
 import com.miguel.Excepciones.*;
 
@@ -86,6 +87,10 @@ public class Library implements OperacionesAdministrativas {
         for (Book libro : libros.values()) {
             libro.mostrarInformacion();
         }
+    }
+
+    public Collection<Book> obtenerLibros() {
+        return libros.values();
     }
 
     public void prestarLibro(String titulo, User usuario)

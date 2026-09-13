@@ -1,14 +1,10 @@
-![Banner](./docs/banner.png)
+![Banner](docs/banner.png)
 
 # 📚 Sistema de Gestión de Biblioteca
 
-![Java](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-Build-C71A36?logo=apachemaven&logoColor=white)
-![JUnit5](https://img.shields.io/badge/Tests-JUnit%205-25A162?logo=junit5&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests%20passing-22%2F22-brightgreen)
-![Status](https://img.shields.io/badge/Status-Completed-blue)
+![Java](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-Build-C71A36?logo=apachemaven&logoColor=white) ![JUnit5](https://img.shields.io/badge/Tests-JUnit%205-25A162?logo=junit5&logoColor=white) ![Tests](https://img.shields.io/badge/Tests%20passing-22%2F22-brightgreen)
 
-Aplicación de consola desarrollada en **Java** para administrar una biblioteca mediante libros, usuarios y préstamos. El proyecto fue construido como práctica de programación orientada a objetos y como proyecto de portafolio, incorporando **Maven, JUnit 5 y Git/GitHub**.
+Aplicación de consola desarrollada en **Java** para administrar una biblioteca mediante libros, usuarios y préstamos. El proyecto fue construido como práctica de programación orientada a objetos y como proyecto de portafolio, incorporando **Maven, JUnit 5 y Git/GitHub**. Además, incluye un **asistente de IA** integrado que responde preguntas en lenguaje natural sobre el catálogo, usando la API de Gemini.
 
 ---
 
@@ -17,6 +13,7 @@ Aplicación de consola desarrollada en **Java** para administrar una biblioteca 
 - [Características](#-características)
 - [Tecnologías](#-tecnologías)
 - [Arquitectura y diseño](#-arquitectura-y-diseño)
+- [Asistente de IA](#-asistente-de-ia)
 - [Estructura del proyecto](#-estructura-del-proyecto)
 - [Pruebas automatizadas](#-pruebas-automatizadas)
 - [Gestión de datos](#-gestión-de-datos)
@@ -39,16 +36,19 @@ Aplicación de consola desarrollada en **Java** para administrar una biblioteca 
 - Creación de usuarios mediante `UserFactory`.
 - Excepciones personalizadas para errores del dominio.
 - Pruebas automatizadas con JUnit 5.
+- **Asistente de IA** que responde preguntas en lenguaje natural sobre el catálogo de libros, usando la API de Gemini con el contexto real de la biblioteca.
 
 ## 🛠 Tecnologías
 
-| Tecnología | Uso |
-|---|---|
-| Java 25 | Lenguaje y desarrollo de la aplicación |
-| Maven | Gestión del proyecto, dependencias y ejecución de pruebas |
-| JUnit 5 | Pruebas automatizadas |
-| Git | Control de versiones |
-| GitHub | Repositorio y publicación del proyecto |
+| Tecnología | Uso                                                       |
+| ---------- | --------------------------------------------------------- |
+| Java 25    | Lenguaje y desarrollo de la aplicación                    |
+| Maven      | Gestión del proyecto, dependencias y ejecución de pruebas |
+| JUnit 5    | Pruebas automatizadas                                     |
+| Git        | Control de versiones                                      |
+| GitHub     | Repositorio y publicación del proyecto                    |
+| Gemini API | Asistente de IA en lenguaje natural sobre el catálogo     |
+| Jackson    | Parseo de las respuestas JSON de la API de Gemini          |
 
 ## 🏗 Arquitectura y diseño
 
@@ -64,6 +64,8 @@ El proyecto aplica principios de programación orientada a objetos para separar 
 - `UserFactory`: centraliza la creación de los diferentes tipos de usuario.
 - `GestionPrestamos`: define las operaciones relacionadas con préstamos y devoluciones.
 - `OperacionesAdministrativas`: define operaciones administrativas de la biblioteca.
+- `AsistenteBiblioteca`: construye el contexto a partir de los datos reales de `Library` y orquesta la consulta al asistente de IA.
+- `GeminiClient`: encapsula la comunicación HTTP con la API de Gemini y el parseo de la respuesta.
 
 ### Conceptos aplicados
 
@@ -76,10 +78,37 @@ El proyecto aplica principios de programación orientada a objetos para separar 
 - **Excepciones personalizadas:** errores específicos del dominio tratados de forma explícita.
 - **Factory Pattern:** `UserFactory` encapsula la creación de usuarios.
 - **Inmutabilidad:** identificadores y referencias que no deben cambiar se mantienen como `final`.
+- **Separación de responsabilidades:** el módulo de IA (`com.miguel.ia`) vive aislado del dominio de negocio, sin acoplar `Library` a la lógica de IA.
+
+## 🤖 Asistente de IA
+
+El sistema incluye un asistente conversacional (opción del menú "Preguntar al asistente") que responde preguntas en lenguaje natural sobre el catálogo, por ejemplo:
+
+- *"¿qué libros tienes disponibles?"*
+- *"¿cuál es el libro más antiguo?"*
+- *"recomiéndame un libro clásico"*
+
+**Cómo funciona:**
+
+1. `AsistenteBiblioteca` construye un contexto en texto a partir de los libros reales almacenados en `Library` (título, autor, año y disponibilidad, calculada según los préstamos activos).
+2. Ese contexto se envía junto con la pregunta del usuario a la API de Gemini (`gemini-3.6-flash`) a través de `GeminiClient`.
+3. `GeminiClient` parsea la respuesta JSON con Jackson y devuelve solo el texto generado, listo para mostrarse en consola.
+
+Al construir el contexto desde los datos reales del sistema (en vez de dejar que el modelo responda de memoria), se evita que la IA invente libros o información que no existe en el catálogo.
+
+**Configuración:**
+
+El proyecto necesita una API key gratuita de Google AI Studio, provista como variable de entorno:
+
+```
+GEMINI_API_KEY=tu_clave_aquí
+```
+
+Puedes obtener una clave gratuita en [aistudio.google.com](https://aistudio.google.com/app/apikey) (no requiere tarjeta de crédito).
 
 ## 📂 Estructura del proyecto
 
-```text
+```
 biblioteca/
 ├── src/
 │   ├── main/
@@ -97,13 +126,16 @@ biblioteca/
 │   │               ├── Student.java
 │   │               ├── User.java
 │   │               ├── UserFactory.java
-│   │               └── Excepciones/
-│   │                   ├── LibroNoEncontradoException.java
-│   │                   ├── LibroPrestadoException.java
-│   │                   ├── LibroYaExisteException.java
-│   │                   ├── TipoUsuarioInvalidoException.java
-│   │                   ├── UsuarioNoEncontradoException.java
-│   │                   └── UsuarioYaExisteException.java
+│   │               ├── Excepciones/
+│   │               │   ├── LibroNoEncontradoException.java
+│   │               │   ├── LibroPrestadoException.java
+│   │               │   ├── LibroYaExisteException.java
+│   │               │   ├── TipoUsuarioInvalidoException.java
+│   │               │   ├── UsuarioNoEncontradoException.java
+│   │               │   └── UsuarioYaExisteException.java
+│   │               └── ia/
+│   │                   ├── AsistenteBiblioteca.java
+│   │                   └── GeminiClient.java
 │   └── test/
 │       └── java/
 │           └── com/
@@ -120,19 +152,19 @@ El proyecto cuenta actualmente con **22 pruebas automatizadas** para validar esc
 
 Las pruebas se encuentran en:
 
-```text
+```
 src/test/java/com/miguel/LibraryTest.java
 ```
 
 Para ejecutarlas:
 
-```bash
+```
 mvn clean test
 ```
 
 El resultado esperado es:
 
-```text
+```
 BUILD SUCCESS
 ```
 
@@ -177,10 +209,11 @@ Esto permite separar los errores propios de la aplicación de errores genéricos
 - **JDK 25**
 - **Maven 3.9.x** o compatible
 - Git, si se desea clonar el repositorio
+- Una API key gratuita de Gemini (Google AI Studio), configurada como variable de entorno `GEMINI_API_KEY`, para usar el asistente de IA
 
 Comprobar versiones:
 
-```bash
+```
 java -version
 mvn -version
 ```
@@ -189,26 +222,32 @@ mvn -version
 
 Clonar el proyecto:
 
-```bash
+```
 git clone https://github.com/Mvilla44/biblioteca.git
 cd biblioteca
 ```
 
+Configurar la variable de entorno con tu API key de Gemini:
+
+```
+GEMINI_API_KEY=tu_clave_aquí
+```
+
 Ejecutar las pruebas:
 
-```bash
+```
 mvn clean test
 ```
 
 Ejecutar la aplicación desde IntelliJ IDEA mediante:
 
-```text
+```
 com.miguel.Main
 ```
 
 ## 🎯 Objetivo del proyecto
 
-Este proyecto busca demostrar el dominio práctico de conceptos fundamentales de Java y herramientas utilizadas en un flujo de desarrollo real: programación orientada a objetos, colecciones, interfaces, herencia, polimorfismo, excepciones personalizadas, pruebas automatizadas, Maven y control de versiones con Git.
+Este proyecto busca demostrar el dominio práctico de conceptos fundamentales de Java y herramientas utilizadas en un flujo de desarrollo real: programación orientada a objetos, colecciones, interfaces, herencia, polimorfismo, excepciones personalizadas, pruebas automatizadas, Maven, control de versiones con Git, y la integración de un servicio de IA externo en una arquitectura ya existente.
 
 ## 👤 Autor
 
