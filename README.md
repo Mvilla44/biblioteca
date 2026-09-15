@@ -2,9 +2,9 @@
 
 # 📚 Sistema de Gestión de Biblioteca
 
-![Java](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-Build-C71A36?logo=apachemaven&logoColor=white) ![JUnit5](https://img.shields.io/badge/Tests-JUnit%205-25A162?logo=junit5&logoColor=white) ![Tests](https://img.shields.io/badge/Tests%20passing-22%2F22-brightgreen)
+![Java](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-Build-C71A36?logo=apachemaven&logoColor=white) ![JUnit5](https://img.shields.io/badge/Tests-JUnit%205-25A162?logo=junit5&logoColor=white) ![Tests](https://img.shields.io/badge/Tests%20passing-22%2F22-brightgreen) [![Maven Tests](https://github.com/Mvilla44/biblioteca/actions/workflows/maven-tests.yml/badge.svg)](https://github.com/Mvilla44/biblioteca/actions/workflows/maven-tests.yml)
 
-Aplicación de consola desarrollada en **Java** para administrar una biblioteca mediante libros, usuarios y préstamos. El proyecto fue construido como práctica de programación orientada a objetos y como proyecto de portafolio, incorporando **Maven, JUnit 5 y Git/GitHub**. Además, incluye un **asistente de IA** integrado que responde preguntas en lenguaje natural sobre el catálogo, usando la API de Gemini.
+Aplicación de consola desarrollada en **Java** para administrar una biblioteca mediante libros, usuarios y préstamos. El proyecto fue construido como práctica de programación orientada a objetos y como proyecto de portafolio, incorporando **Maven, JUnit 5, Git/GitHub e integración continua con GitHub Actions**. Además, incluye un **asistente de IA** integrado que responde preguntas en lenguaje natural sobre el catálogo, usando la API de Gemini.
 
 ---
 
@@ -16,8 +16,9 @@ Aplicación de consola desarrollada en **Java** para administrar una biblioteca 
 - [Asistente de IA](#-asistente-de-ia)
 - [Estructura del proyecto](#-estructura-del-proyecto)
 - [Pruebas automatizadas](#-pruebas-automatizadas)
+- [Integración Continua (CI/CD)](#️-integración-continua-cicd)
 - [Gestión de datos](#-gestión-de-datos)
-- [Excepciones personalizadas](#-excepciones-personalizadas)
+- [Excepciones personalizadas](#️-excepciones-personalizadas)
 - [Requisitos](#-requisitos)
 - [Instalación y ejecución](#-instalación-y-ejecución)
 - [Objetivo del proyecto](#-objetivo-del-proyecto)
@@ -36,19 +37,21 @@ Aplicación de consola desarrollada en **Java** para administrar una biblioteca 
 - Creación de usuarios mediante `UserFactory`.
 - Excepciones personalizadas para errores del dominio.
 - Pruebas automatizadas con JUnit 5.
+- Pipeline de integración continua con GitHub Actions.
 - **Asistente de IA** que responde preguntas en lenguaje natural sobre el catálogo de libros, usando la API de Gemini con el contexto real de la biblioteca.
 
 ## 🛠 Tecnologías
 
-| Tecnología | Uso                                                       |
-| ---------- | --------------------------------------------------------- |
-| Java 25    | Lenguaje y desarrollo de la aplicación                    |
-| Maven      | Gestión del proyecto, dependencias y ejecución de pruebas |
-| JUnit 5    | Pruebas automatizadas                                     |
-| Git        | Control de versiones                                      |
-| GitHub     | Repositorio y publicación del proyecto                    |
-| Gemini API | Asistente de IA en lenguaje natural sobre el catálogo     |
-| Jackson    | Parseo de las respuestas JSON de la API de Gemini          |
+| Tecnología      | Uso                                                          |
+| ---------------- | ------------------------------------------------------------ |
+| Java 25           | Lenguaje y desarrollo de la aplicación                        |
+| Maven             | Gestión del proyecto, dependencias y ejecución de pruebas     |
+| JUnit 5           | Pruebas automatizadas                                         |
+| Git               | Control de versiones                                          |
+| GitHub            | Repositorio y publicación del proyecto                        |
+| Gemini API        | Asistente de IA en lenguaje natural sobre el catálogo          |
+| Jackson           | Parseo de las respuestas JSON de la API de Gemini              |
+| GitHub Actions    | Integración continua (CI) — ejecución automática de pruebas   |
 
 ## 🏗 Arquitectura y diseño
 
@@ -110,6 +113,9 @@ Puedes obtener una clave gratuita en [aistudio.google.com](https://aistudio.goog
 
 ```
 biblioteca/
+├── .github/
+│   └── workflows/
+│       └── maven-tests.yml
 ├── src/
 │   ├── main/
 │   │   └── java/
@@ -141,6 +147,7 @@ biblioteca/
 │           └── com/
 │               └── miguel/
 │                   └── LibraryTest.java
+├── docs/
 ├── .gitignore
 ├── pom.xml
 └── README.md
@@ -180,6 +187,26 @@ BUILD SUCCESS
 - Validar tipos de usuario no soportados en `UserFactory`.
 - Impedir crear préstamos sin libro o usuario válidos.
 - Impedir devolver un préstamo que ya fue cerrado.
+
+## ⚙️ Integración Continua (CI/CD)
+
+El proyecto cuenta con un workflow de **GitHub Actions** que ejecuta automáticamente la suite de pruebas en cada `push` o `pull request` hacia la rama `main`.
+
+Archivo de configuración:
+
+```
+.github/workflows/maven-tests.yml
+```
+
+**Pasos del pipeline:**
+
+1. Clona el repositorio (`actions/checkout@v5`).
+2. Configura el entorno con JDK 25 (`actions/setup-java@v5`, distribución Temurin).
+3. Ejecuta `mvn clean test`, corriendo las 22 pruebas unitarias del proyecto.
+
+Esto garantiza que cada cambio subido al repositorio mantenga la suite de pruebas en estado exitoso, evitando regresiones sin depender de ejecutarlas manualmente antes de cada entrega.
+
+Puedes ver el historial de ejecuciones en la pestaña [Actions](https://github.com/Mvilla44/biblioteca/actions) del repositorio.
 
 ## 🗄 Gestión de datos
 
@@ -247,7 +274,7 @@ com.miguel.Main
 
 ## 🎯 Objetivo del proyecto
 
-Este proyecto busca demostrar el dominio práctico de conceptos fundamentales de Java y herramientas utilizadas en un flujo de desarrollo real: programación orientada a objetos, colecciones, interfaces, herencia, polimorfismo, excepciones personalizadas, pruebas automatizadas, Maven, control de versiones con Git, y la integración de un servicio de IA externo en una arquitectura ya existente.
+Este proyecto busca demostrar el dominio práctico de conceptos fundamentales de Java y herramientas utilizadas en un flujo de desarrollo real: programación orientada a objetos, colecciones, interfaces, herencia, polimorfismo, excepciones personalizadas, pruebas automatizadas, Maven, control de versiones con Git e integración continua con GitHub Actions, y la integración de un servicio de IA externo en una arquitectura ya existente.
 
 ## 👤 Autor
 
